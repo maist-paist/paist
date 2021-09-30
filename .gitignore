@@ -1,0 +1,8 @@
+/venv
+/ReactJS/node_modules
+/ReactJS/build
+/temp
+/build
+/dist
+/.vscode
+/app.spec
