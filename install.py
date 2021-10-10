@@ -15,12 +15,12 @@ git_remove = config.removeReactJsGit
 
 # clone or update git repository
 if not git_remove and os.path.exists('./ReactJS/package.json'):
-    subprocess.run(["cd", "./ReactJS"])
-    subprocess.run(["git", "pull"])
-    subprocess.run(["cd", ".."])  # back to the root
-else:
-    shutil.rmtree("./ReactJS/")
+    subprocess.run(["git", "pull"], cwd="{0}/ReactJS".format(os.path.abspath("./")), shell=config.isWindows)
+elif not os.path.exists('./ReactJS/package.json'):
+    if os.path.exists("./ReactJS"):
+        shutil.rmtree("./ReactJS/")
     os.makedirs("./ReactJS/")
+    print(config.reactJSGitRepository)
     subprocess.run(["git", "clone", config.reactJSGitRepository, "ReactJS"])
     if git_remove:
         shutil.rmtree("./ReactJS/.git/")
@@ -28,4 +28,4 @@ else:
 
 if not os.path.exists('./ReactJS/node_modules'):
     # run 'npm install'
-    subprocess.run(["npm", "install", "--prefix", "./ReactJS"])
+    subprocess.run(["npm", "install"], cwd="{0}/ReactJS".format(os.path.abspath("./")), shell=config.isWindows)
